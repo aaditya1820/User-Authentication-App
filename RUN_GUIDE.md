@@ -10,19 +10,25 @@ Follow these steps to get the full-stack application running on your local machi
 ---
 
 ## 1. Install Dependencies
-In the project root directory, run:
+Navigate to both folders and install dependencies:
 ```bash
-npm run install:all
+# Backend
+cd backend
+npm install
+
+# Frontend
+cd ..
+cd frontend
+npm install
 ```
-*This command installs the root helper package, as well as all dependencies for both the `/client` and `/server` folders.*
 
 ## 2. Configure Environment
-Ensure the `server/.env` file contains the correct settings. The project is already pre-configured with the credentials you provided and uses SQLite by default.
+Ensure the `backend/.env` file contains the correct settings. Use `backend/.env.example` as a template.
 
 ## 3. Setup Database
-Navigate to the server directory and initialize the database:
+Navigate to the backend directory and initialize the database:
 ```bash
-cd server
+cd backend
 npx prisma db push
 ```
 *This creates the `dev.db` SQLite file and applies the schema.*
@@ -37,9 +43,17 @@ npm run seed
 - **Password**: `AdminPassword123!`
 
 ## 5. Start the Application
-Return to the project root and start both services concurrently:
+Start both services in separate terminals:
+
+**Terminal 1 (Backend):**
 ```bash
-cd ..
+cd backend
+npm run dev
+```
+
+**Terminal 2 (Frontend):**
+```bash
+cd frontend
 npm run dev
 ```
 

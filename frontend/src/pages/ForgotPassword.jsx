@@ -27,9 +27,9 @@ const ForgotPassword = () => {
     try {
       await api.post('/auth/forgot-password', cleanData);
       setIsSent(true);
-      toast.success('OTP sent to your email');
+      toast.success('Recovery link sent to your email');
     } catch (err) {
-      toast.error('Failed to send OTP');
+      toast.error('Failed to send recovery link');
     } finally {
       setIsLoading(false);
     }
@@ -42,10 +42,10 @@ const ForgotPassword = () => {
                 <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
                     <Mail size={32} />
                 </div>
-                <h2 className="text-2xl font-bold mb-4">Check your email</h2>
-                <p className="text-neutral-500 mb-8">We've sent a 6-digit OTP code to your inbox. Please enter it on the next screen to reset your password.</p>
+                <h2 className="text-2xl font-bold mb-4 capitalize">link sent for password reset</h2>
+                <p className="text-neutral-500 mb-8">We've sent a secure recovery link to your email. Please check your inbox and follow the instructions to reset your password.</p>
                 <div className="space-y-4">
-                    <Link to="/reset-password" state={{ email: watch?.email }} className="block w-full btn-primary text-center">Enter OTP</Link>
+                    <Link to="/login" className="block w-full btn-primary text-center">Back to Login</Link>
                     <button onClick={() => setIsSent(false)} className="text-sm font-bold text-neutral-400 hover:text-neutral-600">Resend email</button>
                 </div>
             </div>
@@ -72,7 +72,7 @@ const ForgotPassword = () => {
                     className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full border-4 border-white"
                 ></motion.div>
             </div>
-            <h2 className="text-3xl font-black text-neutral-900 mb-4 tracking-tight">Check your email</h2>
+            <h2 className="text-3xl font-black text-neutral-900 mb-4 tracking-tight capitalize">link sent for password reset</h2>
             <p className="text-neutral-500 font-bold mb-10 leading-relaxed">We've dispatched a secure recovery link to your inbox. Please click it to choose a new password.</p>
             <div className="space-y-4">
                 <Link to="/login" className="block w-full btn-primary py-4 text-lg font-black shadow-lg shadow-primary/20 transition-all active:scale-95">BACK TO LOGIN</Link>
@@ -138,7 +138,7 @@ const ForgotPassword = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                         >
-                            SEND RECOVERY CODE
+                            SEND RECOVERY LINK
                         </motion.span>
                     )}
                 </AnimatePresence>

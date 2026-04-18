@@ -18,35 +18,42 @@ A comprehensive, secure, and beautiful authentication system built from scratch.
 
 ## 📥 Installation
 
-1. **Clone the repository**
-2. **Install dependencies**:
+1. **Backend Setup**:
    ```bash
-   npm run install:all
-   ```
-3. **Configure Environment Variables**:
-   Create a `server/.env` file (see `.env.example` in the root). 
-   *Note: OAuth credentials for Google and GitHub are already provided in the code/env for testing.*
-
-4. **Initialize Database**:
-   ```bash
-   cd server
+   cd backend
+   npm install
    npx prisma db push
    npm run seed
    ```
 
-5. **Start Development Server**:
+2. **Frontend Setup**:
    ```bash
-   npm run dev
+   cd frontend
+   npm install
    ```
+
+## 🚀 Running the Application
+
+Since there are no root scripts, you should start each service in its own terminal:
+
+- **Start Backend**: `cd backend && npm run dev`
+- **Start Frontend**: `cd frontend && npm run dev`
+
+## 🌍 Deployment (Render.com)
+
+This project is optimized for Render as a **Web Service**:
+
+1. **Connect your Repo**: Set `backend` as the **Root Directory**.
+2. **Build Command**: 
+   ```bash
+   npm install && npm run build --prefix ../frontend && npm run prisma:generate
+   ```
+3. **Start Command**: `npm start`
+4. **Environment Variables**: Add your `.env` variables (DATABASE_URL, JWT_SECRET, etc.) in the Render dashboard.
 
 ## 🔑 Default Credentials
 - **Admin Email**: `admin@authsystem.com`
 - **Admin Password**: `AdminPassword123!`
-
-## 🐳 Docker Usage
-```bash
-docker-compose up --build
-```
 
 ## 📚 API Documentation
 Available at `http://localhost:5000/api/docs` (Swagger).
