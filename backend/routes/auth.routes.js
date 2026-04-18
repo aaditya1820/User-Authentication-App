@@ -50,7 +50,7 @@ router.get('/google/callback', passport.authenticate('google', { session: false,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
-  res.redirect(`${process.env.FRONTEND_URL}/oauth-success?token=${accessToken}`);
+  res.redirect(`${env.FRONTEND_URL}/oauth-success?token=${accessToken}`);
 });
 
 router.get('/github', passport.authenticate('github', { scope: ['user:email'], session: false }));
@@ -76,7 +76,7 @@ router.get('/github/callback', passport.authenticate('github', { session: false,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
-  res.redirect(`${process.env.FRONTEND_URL}/oauth-success?token=${accessToken}`);
+  res.redirect(`${env.FRONTEND_URL}/oauth-success?token=${accessToken}`);
 });
 
 export default router;
