@@ -40,7 +40,8 @@ const LoginPage = () => {
   };
 
   const socialLogin = (provider) => {
-    window.location.href = `/api/v1/auth/${provider}`;
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+    window.location.href = `${baseUrl}/auth/${provider}`;
   };
 
   return (
