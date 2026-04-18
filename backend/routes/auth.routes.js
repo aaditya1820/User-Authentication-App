@@ -13,6 +13,7 @@ import {
 import { authRateLimiter } from '../middleware/rateLimiter.js';
 import { generateAccessToken, generateRefreshToken } from '../utils/tokens.js';
 import prisma from '../utils/prisma.js';
+import { env } from '../utils/env.js';
 
 const router = Router();
 
