@@ -1,9 +1,10 @@
 import nodemailer from 'nodemailer';
 import logger from './logger.js';
+import { env } from './env.js';
 
-const smtpHost = process.env.SMTP_HOST || 'localhost';
-const smtpUser = process.env.SMTP_USER?.replace(/^["']|["']$/g, ''); // Strip surrounding quotes if present
-const smtpPass = process.env.SMTP_PASS?.replace(/^["']|["']$/g, '');
+const smtpHost = env.SMTP_HOST;
+const smtpUser = env.SMTP_USER?.replace(/^["']|["']$/g, ''); // Strip surrounding quotes if present
+const smtpPass = env.SMTP_PASS?.replace(/^["']|["']$/g, '');
 
 const transportConfig = smtpHost.includes('gmail')
   ? {
@@ -15,7 +16,7 @@ const transportConfig = smtpHost.includes('gmail')
     }
   : {
       host: smtpHost,
-      port: parseInt(process.env.SMTP_PORT || '1025'),
+      port: parseInt(env.SMTP_PORT),
       secure: process.env.SMTP_SECURE === 'true', 
       auth: {
         user: smtpUser,
@@ -60,7 +61,7 @@ export const sendEmail = async (to, subject, html) => {
   // Fallback to standard SMTP if Resend is not configured or fails
   try {
     const info = await transporter.sendMail({
-      from: '"Authentication System" <user.authentication@gmail.com>',
+      from: `"ShieldAuth" <${process.env.EMAIL_FROM || 'user.authentication@gmail.com'}>`,
       to,
       subject,
       html,
