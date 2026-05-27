@@ -54,7 +54,11 @@ export const register = async (req, res, next) => {
       },
     });
 
-    await sendVerificationEmail(email, verificationToken);
+    // Send email in the background to prevent slow or blocked SMTP servers from hanging the request
+    sendVerificationEmail(email, verificationToken).catch(err => {
+      logger.error(`Failed to send verification email to ${email}: ${err.message}`);
+    });
+
     await logAudit(user.id, 'USER_REGISTERED', req);
 
     res.status(201).json({
@@ -240,7 +244,11 @@ export const forgotPassword = async (req, res, next) => {
       },
     });
 
-    await sendPasswordResetEmail(email, token);
+    // Send email in the background to prevent slow or blocked SMTP servers from hanging the request
+    sendPasswordResetEmail(email, token).catch(err => {
+      logger.error(`Failed to send password reset email to ${email}: ${err.message}`);
+    });
+
     res.json({ message: 'Reset link sent to email' });
   } catch (error) {
     next(error);

@@ -43,6 +43,7 @@ export const sendEmail = async (to, subject, html) => {
 
 export const sendVerificationEmail = async (email, token) => {
   const url = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
+  logger.info(`🔑 [SMTP FALLBACK] Verification link for ${email}: ${url}`);
   const html = `
     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #f9fafb; border-radius: 24px; border: 1px solid #e5e7eb;">
       <div style="text-align: center; margin-bottom: 32px;">
@@ -65,6 +66,7 @@ export const sendVerificationEmail = async (email, token) => {
 
 export const sendPasswordResetEmail = async (email, token) => {
   const url = `${process.env.FRONTEND_URL}/reset-password?token=${token}&email=${email}`;
+  logger.info(`🔑 [SMTP FALLBACK] Password reset link for ${email}: ${url}`);
   const html = `
     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background-color: #f9fafb; border-radius: 24px; border: 1px solid #e5e7eb;">
       <div style="text-align: center; margin-bottom: 32px;">
