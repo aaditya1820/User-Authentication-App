@@ -1,7 +1,18 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  // Auto-detect production backend URL if running on the live frontend domain
+  if (typeof window !== 'undefined' && window.location.hostname.includes('smartverify')) {
+    return 'https://user-authentication-app-cmaf.onrender.com/api/v1';
+  }
+  return '/api/v1';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
+  baseURL: getBaseURL(),
   withCredentials: true,
 });
 
