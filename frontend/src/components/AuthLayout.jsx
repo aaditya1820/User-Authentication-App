@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 const AuthLayout = ({ children, title, subtitle }) => {
   return (
     <div className="flex min-h-screen bg-white">
-      {}
-      <div className="hidden lg:flex w-1/2 bg-primary relative overflow-hidden items-center justify-center p-20">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+      {/* Left side: Premium Branding */}
+      <div className="hidden lg:flex w-1/2 mesh-bg relative overflow-hidden items-center justify-center p-20">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full -mr-48 -mt-48 blur-3xl animate-pulse-soft"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full -ml-48 -mb-48 blur-3xl animate-pulse-soft"></div>
         
         <div className="relative z-10 text-white max-w-md">
           <motion.div

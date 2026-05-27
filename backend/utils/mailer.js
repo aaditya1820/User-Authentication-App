@@ -1,15 +1,29 @@
 import nodemailer from 'nodemailer';
 import logger from './logger.js';
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'localhost',
-  port: parseInt(process.env.SMTP_PORT || '1025'),
-  secure: process.env.SMTP_SECURE === 'true', 
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+const smtpHost = process.env.SMTP_HOST || 'localhost';
+const smtpUser = process.env.SMTP_USER?.replace(/^["']|["']$/g, ''); // Strip surrounding quotes if present
+const smtpPass = process.env.SMTP_PASS?.replace(/^["']|["']$/g, '');
+
+const transportConfig = smtpHost.includes('gmail')
+  ? {
+      service: 'gmail',
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    }
+  : {
+      host: smtpHost,
+      port: parseInt(process.env.SMTP_PORT || '1025'),
+      secure: process.env.SMTP_SECURE === 'true', 
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    };
+
+const transporter = nodemailer.createTransport(transportConfig);
 
 export const sendEmail = async (to, subject, html) => {
   try {

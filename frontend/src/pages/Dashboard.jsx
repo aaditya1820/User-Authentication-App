@@ -30,9 +30,9 @@ const Dashboard = () => {
       {}
       <aside className="w-64 bg-white border-r border-neutral-200 hidden md:flex flex-col">
         <div className="p-6">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">A</div>
-            <span className="text-xl font-bold tracking-tight">Auth<span className="text-primary font-black">S</span></span>
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-indigo-600/20">S</div>
+            <span className="text-xl font-black tracking-tight text-neutral-800">Shield<span className="gradient-text font-black">Auth</span></span>
           </div>
         </div>
         
@@ -80,7 +80,7 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="bg-primary rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl shadow-primary/30"
+            className="mesh-bg rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl shadow-indigo-600/30"
           >
             <div className="relative z-10">
               <motion.h2 

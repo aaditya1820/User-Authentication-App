@@ -162,17 +162,17 @@ const LoginPage = () => {
           <button
             type="button"
             onClick={() => socialLogin("google")}
-            className="flex items-center justify-center space-x-2 py-3 border border-neutral-200 rounded-xl hover:bg-neutral-50 transition-colors font-semibold"
+            className="flex items-center justify-center space-x-3 py-4 border border-neutral-200/80 rounded-2xl hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-300 font-bold text-neutral-700 shadow-sm active:scale-[0.98]"
           >
-            <Globe size={20} className="text-blue-500" />
+            <Globe size={20} className="text-indigo-600 animate-pulse-soft" />
             <span>Google</span>
           </button>
           <button
             type="button"
             onClick={() => socialLogin("github")}
-            className="flex items-center justify-center space-x-2 py-3 border border-neutral-200 rounded-xl hover:bg-neutral-50 transition-colors font-semibold"
+            className="flex items-center justify-center space-x-3 py-4 border border-neutral-200/80 rounded-2xl hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-300 font-bold text-neutral-700 shadow-sm active:scale-[0.98]"
           >
-            <Code size={20} />
+            <Code size={20} className="text-neutral-800" />
             <span>GitHub</span>
           </button>
         </div>

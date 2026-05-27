@@ -6,22 +6,57 @@
 
 @layer base {
   body {
-    @apply bg-neutral-50 text-neutral-900 font-sans;
+    @apply bg-neutral-50 text-neutral-900 font-sans antialiased selection:bg-indigo-500 selection:text-white;
   }
 }
 
+/* Custom premium design system classes */
+
 .glass {
-  @apply bg-white/70 backdrop-blur-md border border-white/20;
+  @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl shadow-neutral-100/50;
 }
 
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600;
+  @apply bg-clip-text text-transparent bg-gradient-to-tr from-indigo-600 via-violet-600 to-purple-600 font-extrabold;
 }
 
 .btn-primary {
-  @apply px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-all active:scale-95 disabled:opacity-50;
+  @apply w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl font-bold hover:from-indigo-700 hover:to-violet-700 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-lg shadow-indigo-600/20 disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.btn-secondary {
+  @apply w-full px-6 py-4 bg-white text-neutral-800 border border-neutral-200/80 rounded-2xl font-bold hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-sm;
 }
 
 .input-field {
-  @apply w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all;
+  @apply w-full px-5 py-4 bg-neutral-50 border border-neutral-200 rounded-2xl text-neutral-800 placeholder-neutral-400 outline-none transition-all duration-300 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 font-medium;
+}
+
+/* Beautiful modern mesh gradient background animation */
+.mesh-bg {
+  background-color: #4F46E5;
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(99, 102, 241, 0.8) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(139, 92, 246, 0.8) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(168, 85, 247, 0.8) 0px, transparent 50%);
+}
+
+/* Micro-animations and custom effects */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(1.05); }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 8s ease-in-out infinite;
 }
