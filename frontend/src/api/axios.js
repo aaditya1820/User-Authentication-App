@@ -17,7 +17,15 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    
+    // Bypass token refresh/redirect logic for authentication endpoints
+    const isAuthEndpoint = originalRequest.url?.includes('/auth/login') ||
+                           originalRequest.url?.includes('/auth/register') ||
+                           originalRequest.url?.includes('/auth/forgot-password') ||
+                           originalRequest.url?.includes('/auth/reset-password') ||
+                           originalRequest.url?.includes('/auth/refresh');
+
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
       originalRequest._retry = true;
       try {
         const { data } = await axios.post('/api/v1/auth/refresh', {}, { withCredentials: true });

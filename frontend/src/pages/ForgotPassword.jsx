@@ -35,23 +35,7 @@ const ForgotPassword = () => {
     }
   };
 
-  if (isSent) {
-     return (
-        <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-6">
-            <div className="max-w-md w-full bg-white rounded-3xl p-10 border border-neutral-200 text-center">
-                <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Mail size={32} />
-                </div>
-                <h2 className="text-2xl font-bold mb-4 capitalize">link sent for password reset</h2>
-                <p className="text-neutral-500 mb-8">We've sent a secure recovery link to your email. Please check your inbox and follow the instructions to reset your password.</p>
-                <div className="space-y-4">
-                    <Link to="/login" className="block w-full btn-primary text-center">Back to Login</Link>
-                    <button onClick={() => setIsSent(false)} className="text-sm font-bold text-neutral-400 hover:text-neutral-600">Resend email</button>
-                </div>
-            </div>
-        </div>
-     )
-  }
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-6">
