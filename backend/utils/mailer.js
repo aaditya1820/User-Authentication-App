@@ -26,6 +26,38 @@ const transportConfig = smtpHost.includes('gmail')
 const transporter = nodemailer.createTransport(transportConfig);
 
 export const sendEmail = async (to, subject, html) => {
+  const resendApiKey = process.env.RESEND_API_KEY?.replace(/^["']|["']$/g, '');
+
+  if (resendApiKey) {
+    try {
+      logger.info(`Sending email via Resend HTTP API to ${to}...`);
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: 'ShieldAuth <onboarding@resend.dev>',
+          to: [to],
+          subject,
+          html,
+        }),
+      });
+
+      const resData = await response.json();
+      if (!response.ok) {
+        throw new Error(resData.message || JSON.stringify(resData));
+      }
+
+      logger.info(`Email sent via Resend: ${resData.id}`);
+      return resData;
+    } catch (error) {
+      logger.error(`Error sending email via Resend: ${error.message}. Trying SMTP fallback...`);
+    }
+  }
+
+  // Fallback to standard SMTP if Resend is not configured or fails
   try {
     const info = await transporter.sendMail({
       from: '"Authentication System" <user.authentication@gmail.com>',
@@ -33,10 +65,10 @@ export const sendEmail = async (to, subject, html) => {
       subject,
       html,
     });
-    logger.info(`Email sent: ${info.messageId}`);
+    logger.info(`Email sent via SMTP: ${info.messageId}`);
     return info;
   } catch (error) {
-    logger.error(`Error sending email: ${error.message}`);
+    logger.error(`Error sending email via SMTP: ${error.message}`);
     throw error;
   }
 };
