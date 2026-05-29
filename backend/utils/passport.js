@@ -79,7 +79,42 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const email = profile.emails[0].value;
+        let email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
+        
+        // If email is not public, fetch all user emails from GitHub API
+        if (!email) {
+          try {
+            logger.info(`GitHub profile email is private. Fetching from user emails API...`);
+            const emailResponse = await fetch('https://api.github.com/user/emails', {
+              headers: {
+                'Authorization': `token ${accessToken}`,
+                'User-Agent': 'ShieldAuth'
+              }
+            });
+            if (emailResponse.ok) {
+              const emails = await emailResponse.json();
+              if (Array.isArray(emails)) {
+                // Find primary verified email, or primary, or any email
+                const primaryEmail = emails.find(e => e.primary && e.verified) || 
+                                     emails.find(e => e.primary) || 
+                                     emails[0];
+                if (primaryEmail) {
+                  email = primaryEmail.email;
+                  logger.info(`Successfully fetched email from GitHub API: ${email}`);
+                }
+              }
+            }
+          } catch (err) {
+            logger.error(`Failed to fetch email from GitHub API: ${err.message}`);
+          }
+        }
+
+        // Final fallback to a stable unique placeholder if no email could be retrieved
+        if (!email) {
+          email = `${profile.username || profile.id}@github.noreply.com`;
+          logger.warn(`Could not retrieve email for GitHub user ${profile.username || profile.id}. Using fallback email: ${email}`);
+        }
+
         const providerId = profile.id.toString();
 
         let user = await prisma.user.findUnique({
@@ -92,7 +127,7 @@ passport.use(
             data: {
               email,
               name: profile.displayName || profile.username,
-              avatar: profile.photos[0]?.value,
+              avatar: profile.photos && profile.photos[0] ? profile.photos[0].value : null,
               isVerified: true,
               oauthAccounts: {
                 create: {

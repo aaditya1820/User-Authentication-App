@@ -28,7 +28,9 @@ router.post('/verify-reset-token', verifyResetToken);
 router.post('/reset-password', resetPassword);
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
-router.get('/google/callback', passport.authenticate('google', { session: false, failureRedirect: '/login' }), async (req, res) => {
+router.get('/google/callback', (req, res, next) => {
+  passport.authenticate('google', { session: false, failureRedirect: `${env.FRONTEND_URL}/login` })(req, res, next);
+}, async (req, res) => {
   const user = req.user;
   const accessToken = generateAccessToken({ id: user.id, role: user.role });
   const refreshToken = generateRefreshToken({ id: user.id });
@@ -54,7 +56,9 @@ router.get('/google/callback', passport.authenticate('google', { session: false,
 });
 
 router.get('/github', passport.authenticate('github', { scope: ['user:email'], session: false }));
-router.get('/github/callback', passport.authenticate('github', { session: false, failureRedirect: '/login' }), async (req, res) => {
+router.get('/github/callback', (req, res, next) => {
+  passport.authenticate('github', { session: false, failureRedirect: `${env.FRONTEND_URL}/login` })(req, res, next);
+}, async (req, res) => {
   const user = req.user;
   const accessToken = generateAccessToken({ id: user.id, role: user.role });
   const refreshToken = generateRefreshToken({ id: user.id });

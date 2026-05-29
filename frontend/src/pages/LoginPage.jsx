@@ -40,7 +40,12 @@ const LoginPage = () => {
   };
 
   const socialLogin = (provider) => {
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+    let baseUrl = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+    if (baseUrl.startsWith('/')) {
+      baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? `http://localhost:5000${baseUrl}`
+        : `${window.location.origin}${baseUrl}`;
+    }
     window.location.href = `${baseUrl}/auth/${provider}`;
   };
 
